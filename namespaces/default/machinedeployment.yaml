@@ -44,9 +44,9 @@ spec:
             datastore: vsanDatastore
             disk_label: disk0
             disk_size: "40"
-            memory: "4096"
+            memory: "2048"
             network: VM Network
-            num_cpus: "3"
+            num_cpus: "2"
             resource_pool: chris
             vm_template: gke-on-prem-osimage-1.12.7-gke.19-20190516-905ef43658
           networkSpec:
