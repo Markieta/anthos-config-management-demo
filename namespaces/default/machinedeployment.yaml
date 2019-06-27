@@ -1,0 +1,59 @@
+apiVersion: cluster.k8s.io/v1alpha1
+kind: MachineDeployment
+metadata:
+  annotations:
+    machinedeployment.clusters.k8s.io/revision: "3"
+    onprem.gke.io/provider: vsphere
+    configmanagement.gke.io/cluster-selector: selector-demo-config-management
+  labels:
+    kubernetes.googleapis.com/cluster-name: chris
+    kubernetes.googleapis.com/cluster-namespace: default
+    set: node
+  name: chris
+  namespace: default
+spec:
+  minReadySeconds: 0
+  progressDeadlineSeconds: 600
+  replicas: 3
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      kubernetes.googleapis.com/cluster-name: chris
+      kubernetes.googleapis.com/cluster-namespace: default
+      set: node
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        onprem.gke.io/provider: vsphere
+      labels:
+        kubernetes.googleapis.com/cluster-name: chris
+        kubernetes.googleapis.com/cluster-namespace: default
+        set: node
+    spec:
+      providerSpec:
+        value:
+          apiVersion: vsphereproviderconfig.k8s.io/v1alpha1
+          kind: VsphereMachineProviderConfig
+          machineVariables:
+            datacenter: Google-NEXT
+            datastore: vsanDatastore
+            disk_label: disk0
+            disk_size: "40"
+            memory: "4096"
+            network: VM Network
+            num_cpus: "3"
+            resource_pool: chris
+            vm_template: gke-on-prem-osimage-1.12.7-gke.19-20190516-905ef43658
+          networkSpec:
+            address: null
+            dns: null
+            ntp: ""
+            useIPAM: true
+          vsphereMachine: standard-node
+      versions:
+        kubelet: 1.12.7-gke.19
