@@ -5,9 +5,3 @@ metadata:
   name: repo
 spec:
   version: 1.0.0
-status:
-  import:
-    lastUpdate: null
-  source: {}
-  sync:
-    lastUpdate: null
